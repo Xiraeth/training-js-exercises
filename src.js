@@ -167,3 +167,195 @@
 // console.log(transformedCars);
 
 // ---------------------------------------------------------------------------------
+
+// EXERCISE 7
+
+// const getMalesFullName = () => {
+//   return users
+//     .filter((user) => user.sex === "M")
+//     .map((user) => {
+//       return { id: user.id, fullname: `${user.name} ${user.surname}` };
+//     });
+// };
+
+// const users = [
+//   {
+//     id: 13443,
+//     name: "John",
+//     surname: "Volter",
+//     age: 3,
+//     sex: "M",
+//   },
+//   {
+//     id: 25466,
+//     name: "Mary",
+//     surname: "Wild",
+//     age: 18,
+//     sex: "F",
+//   },
+//   {
+//     id: 21121,
+//     name: "John",
+//     surname: "Porter",
+//     age: 28,
+//     sex: "M",
+//   },
+// ];
+
+// const getAdultsObject = () => {
+//   const adults = users.filter((user) => user.age >= 18);
+//   const newObj = {};
+//   adults.forEach((adult) => {
+//     const id = adult.id;
+//     newObj[id] = {
+//       name: adult.name,
+//       surname: adult.surname,
+//       age: adult.age,
+//     };
+//   });
+//   return newObj;
+// };
+
+// console.log(getAdultsObject());
+
+// ---------------------------------------------------------------------------------
+
+// HOMEWORK
+// Check if the certification has _id
+
+// const certification = {
+//   _id: "3567798099455779",
+//   name: "Marios",
+//   age: 45,
+//   year: 2005,
+//   grade: 8,
+// };
+
+// const result = certification._id
+//   ? "It has an '_id' field."
+//   : "It does not have an '_id' field";
+
+// console.log(result);
+
+// ---------------------------------------------------------------------------------
+
+// If the given input is an array of numbers, return the sum of all the positive ones. If the array is empty or there aren't any positive numbers, return 0.
+// const Numbers = [1, -4, 12, 0, -3, 29, -150];
+
+// const result = Numbers.filter((number) => number > 0).reduce(
+//   (acc, cur) => acc + cur,
+//   0
+// );
+
+// console.log(result);
+
+// ---------------------------------------------------------------------------------
+
+// a) Find the number of suppliers’ certifications (check the user type)(sum)
+// b) Find the number of Approved certifications
+
+// const users = [
+//   {
+//     _id: "3546565",
+//     name: "Maria",
+//     type: "SUPPLIER",
+//     certifications: [
+//       {
+//         _id: "3565",
+//         title: "ISO2020",
+//         type: "ISO",
+//         status: "Approved",
+//       },
+//       {
+//         _id: "35655",
+//         title: "FLAG2020",
+//         type: "FLAG",
+//         status: "Approved",
+//       },
+//     ],
+//   },
+//   {
+//     _id: "355646565",
+//     name: "Manos",
+//     type: "SHIPPING_COMPANY",
+//   },
+//   {
+//     _id: "3546565",
+//     name: "Maria",
+//     type: "SUPPLIER",
+//     certifications: [
+//       {
+//         _id: "35654",
+//         title: "ISO2018",
+//         type: "ISO",
+//         status: "Pending",
+//       },
+//     ],
+//   },
+// ];
+
+// a)
+// const result = users
+//   .filter((user) => user.type === "SUPPLIER")
+//   .map((user) => {
+//     let count = 0;
+//     user.certifications.forEach((cer) => count++);
+//     return count;
+//   })
+//   .reduce((acc, cur) => cur + acc);
+
+// b)
+// const result = users
+//   .filter((user) => user.type === "SUPPLIER")
+//   .filter((user) => user.certifications[0].status === "Approved")[0]
+//   .certifications.length;
+
+// console.log(result);
+
+// ---------------------------------------------------------------------------------
+// a) Return the first 3 users with the most points
+// b) Return the first 3 users with the most points in the United Kingdom
+
+// const users = [
+//   {
+//     name: "Maria",
+//     age: 24,
+//     country: "Greece",
+//     points: 100,
+//   },
+//   {
+//     name: "Kostas",
+//     age: 50,
+//     country: "Italy",
+//     points: 2000,
+//   },
+//   {
+//     name: "John",
+//     age: 30,
+//     country: "France",
+//     points: 20,
+//   },
+//   {
+//     name: "James",
+//     age: 30,
+//     country: "United Kingdom",
+//     points: 1400,
+//   },
+//   {
+//     name: "Jennifer",
+//     age: 28,
+//     country: "United Kingdom",
+//     points: 3000,
+//   },
+// ];
+
+//a)
+// const result = users.sort((a, b) => b.points - a.points).slice(0, 3);
+
+//b)
+// const result2 = users
+//   .filter((user) => user.country === "United Kingdom")
+//   .sort((a, b) => b.points - a.points)
+//   .slice(0, 3);
+
+// console.log(result2);
