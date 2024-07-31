@@ -168,7 +168,7 @@
 
 // ---------------------------------------------------------------------------------
 
-// EXERCISE 7
+// HOMEWORK ON CODESANDBOX
 
 // const users = [
 //   {
@@ -367,13 +367,8 @@
 
 // ---------------------------------------------------------------------------------
 
-/*
-  APPLE: 0.12$
-  ORANGE: 0.32$
-  PEN: 0.22$
-  NOTEBOOK: 0.89$
-  PEACH: 0.18$
-*/
+// EXERCISE 7 -SHOPPING CART
+
 const priceList = {
   apple: 0.12,
   orange: 0.32,
@@ -424,9 +419,9 @@ const cart3 = [
   "orange",
 ];
 let sum3 = 0;
-let appleCounter = 0;
-let orangeCounter = 0;
-let amount = 1;
+// let appleCounter = 0;
+// let orangeCounter = 0;
+// let amount = 1;
 
 // or, in object form:
 
@@ -446,39 +441,28 @@ const offers = {
 };
 
 cart3.forEach((item) => {
-  if (item === "apple") {
-    offers.apple.count++;
-    sum3 += priceList.apple;
-  } else if (item === "orange") {
-    offers.orange.count++;
-    sum3 += priceList.orange;
-  }
+  offers[item].count++;
+  sum3 += priceList[item];
 });
+
+for (const [key, value] of Object.entries(offers)) {
+  const dividend = value.count; // Δ
+  const remainder = value.count % value.discountThreshold; // υ
+  const quotient = value.discountThreshold; // π
+  const divider = (dividend - remainder) / quotient; // δ
+  const discount = divider * value.discountAmount * priceList[key];
+  sum3 -= discount;
+}
 
 /*
   Substract the discount, which is the quotient of totalApples / discountThreshold, given by the Euclidean Division:
-  Δ = δ * π + υ => π = (Δ - υ) / δ
-  multiplied by the amount that the exercise description gives us.
-  ----------
-  discountAmount is how many apples you get back
+  Δ = δ * π + υ => π = (Δ - υ) / δ, discount = π * amount * price
+  multiplied by the amount that the exercise description gives us,
+  where discountAmount is how many apples you get back
   e.g. here: 
     In 5 apples the 2 apples of them are free, in 8 oranges the 2 oranges of them are free
   the discountThreshold for apples is 5 and the discountAmount is 2.
  */
 
-sum3 -=
-  ((offers.apple.count -
-    (offers.apple.count % offers.apple.discountThreshold)) /
-    offers.apple.discountThreshold) *
-  offers.apple.discountAmount *
-  priceList.apple;
-sum3 -=
-  ((offers.orange.count -
-    (offers.orange.count % offers.orange.discountThreshold)) /
-    offers.orange.discountThreshold) *
-  offers.orange.discountAmount *
-  priceList.orange;
-
 const sum = Number(sum3.toFixed(1));
-
 console.log(sum);
