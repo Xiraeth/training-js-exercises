@@ -170,14 +170,6 @@
 
 // EXERCISE 7
 
-// const getMalesFullName = () => {
-//   return users
-//     .filter((user) => user.sex === "M")
-//     .map((user) => {
-//       return { id: user.id, fullname: `${user.name} ${user.surname}` };
-//     });
-// };
-
 // const users = [
 //   {
 //     id: 13443,
@@ -201,6 +193,19 @@
 //     sex: "M",
 //   },
 // ];
+
+// const getUsersById = (id) => users.filter((user) => user.id === id);
+
+// const getUsersByName = (name) =>
+// users.filter((user) => user.name === name);
+
+// const getMalesFullName = () => {
+//   return users
+//     .filter((user) => user.sex === "M")
+//     .map((user) => {
+//       return { id: user.id, fullname: `${user.name} ${user.surname}` };
+//     });
+// };
 
 // const getAdultsObject = () => {
 //   const adults = users.filter((user) => user.age >= 18);
@@ -359,3 +364,121 @@
 //   .slice(0, 3);
 
 // console.log(result2);
+
+// ---------------------------------------------------------------------------------
+
+/*
+  APPLE: 0.12$
+  ORANGE: 0.32$
+  PEN: 0.22$
+  NOTEBOOK: 0.89$
+  PEACH: 0.18$
+*/
+const priceList = {
+  apple: 0.12,
+  orange: 0.32,
+  pen: 0.22,
+  notebook: 0.89,
+  peach: 0.18,
+};
+
+// cart 1
+const cart1 = ["apple", "apple", "orange", "apple"];
+let sum1 = 0;
+cart1.forEach((item) => (sum1 += priceList[item]));
+
+// cart 2
+const cart2 = [
+  "apple",
+  "pen",
+  "peach",
+  "apple",
+  "pen",
+  "peach",
+  "notebook",
+  "notebook",
+  "orange",
+];
+let sum2 = 0;
+cart2.forEach((item) => (sum2 += priceList[item]));
+
+// cart 3
+/*
+  if you buy 2 apples you get 1 of them free
+  if you buy 3 oranges you get 1 of them free
+*/
+const cart3 = [
+  "apple",
+  "apple",
+  "apple",
+  "apple",
+  "apple",
+  "orange",
+  "orange",
+  "orange",
+  "orange",
+  "orange",
+  "orange",
+  "orange",
+  "orange",
+  "orange",
+];
+let sum3 = 0;
+let appleCounter = 0;
+let orangeCounter = 0;
+let amount = 1;
+
+// or, in object form:
+
+const offers = {
+  apple: {
+    discountThreshold: 5,
+    discountAmount: 2,
+    discount: 0.12,
+    count: 0,
+  },
+  orange: {
+    discountThreshold: 8,
+    discountAmount: 2,
+    discount: 0.32,
+    count: 0,
+  },
+};
+
+cart3.forEach((item) => {
+  if (item === "apple") {
+    offers.apple.count++;
+    sum3 += priceList.apple;
+  } else if (item === "orange") {
+    offers.orange.count++;
+    sum3 += priceList.orange;
+  }
+});
+
+/*
+  Substract the discount, which is the quotient of totalApples / discountThreshold, given by the Euclidean Division:
+  Δ = δ * π + υ => π = (Δ - υ) / δ
+  multiplied by the amount that the exercise description gives us.
+  ----------
+  discountAmount is how many apples you get back
+  e.g. here: 
+    In 5 apples the 2 apples of them are free, in 8 oranges the 2 oranges of them are free
+  the discountThreshold for apples is 5 and the discountAmount is 2.
+ */
+
+sum3 -=
+  ((offers.apple.count -
+    (offers.apple.count % offers.apple.discountThreshold)) /
+    offers.apple.discountThreshold) *
+  offers.apple.discountAmount *
+  priceList.apple;
+sum3 -=
+  ((offers.orange.count -
+    (offers.orange.count % offers.orange.discountThreshold)) /
+    offers.orange.discountThreshold) *
+  offers.orange.discountAmount *
+  priceList.orange;
+
+const sum = Number(sum3.toFixed(1));
+
+console.log(sum);
