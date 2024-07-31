@@ -106,14 +106,15 @@
 //     id: "133",
 //     name: "Ioanna",
 //   },
+//   2: {
+//     id: "143",
+//     name: "Ioanna",
+//   },
 // };
 
 // // Απάντηση:
-// const result = Object.entries(y).map((entry) => {
-//   const [key, value] = entry;
-//   if (value.id == "133") {
-//     return [key, value];
-//   }
+// const result = Object.entries(y).map(([key, value]) => {
+//   if (value.id == "133") return [key, value];
 // })[1];
 
 // console.log(result);
@@ -148,7 +149,7 @@
 //   },
 // };
 
-// //Η απάντηση σας να είναι της μορφής
+// // Απάντηση:
 
 // const transform = (cars, idProp) => {
 //   const newObj = {};
@@ -194,7 +195,7 @@
 //   },
 // ];
 
-// const getUsersById = (id) => users.filter((user) => user.id === id);
+// const getUsersById = (id) => users.find((user) => user.id === id);
 
 // const getUsersByName = (name) =>
 // users.filter((user) => user.name === name);
@@ -239,6 +240,10 @@
 // const result = certification._id
 //   ? "It has an '_id' field."
 //   : "It does not have an '_id' field";
+
+// or, with optional chaining:
+
+// const result = certification?._id;
 
 // console.log(result);
 
@@ -305,15 +310,23 @@
 //   .map((user) => {
 //     let count = 0;
 //     user.certifications.forEach((cer) => count++);
-//     return count;
+//     return count; // the variable'count' here is an array, each element containing the number of certificates of the respective supplier
+//
 //   })
-//   .reduce((acc, cur) => cur + acc);
+//   .reduce((acc, cur) => cur + acc, 0);
 
 // b)
 // const result = users
 //   .filter((user) => user.type === "SUPPLIER")
-//   .filter((user) => user.certifications[0].status === "Approved")[0]
-//   .certifications.length;
+//   .filter((user) => {
+//     return user.certifications[0].status === "Approved";
+//   })
+//   .map((user) => {
+//     let count = 0;
+//     user.certifications?.forEach((cert) => count++);
+//     return count; // same as above
+//   })
+//   .reduce((acc, cur) => acc + cur, 0);
 
 // console.log(result);
 
@@ -354,10 +367,10 @@
 //   },
 // ];
 
-//a)
+// a)
 // const result = users.sort((a, b) => b.points - a.points).slice(0, 3);
 
-//b)
+// b)
 // const result2 = users
 //   .filter((user) => user.country === "United Kingdom")
 //   .sort((a, b) => b.points - a.points)
@@ -425,14 +438,16 @@ let sum3 = 0;
 
 // or, in object form:
 
-const offers = {
+const products = {
   apple: {
-    discountThreshold: 5,
-    discountAmount: 2,
-    discount: 0.12,
-    count: 0,
+    price: 0.12,
+    discountThreshold: 5, // how many apples are required for the discount to happen
+    discountAmount: 2, // how many apples are discounted once the discount happens
+    discount: 0.12, // price of discount (1 apple)
+    count: 0, // the amount the user has in their cart
   },
   orange: {
+    price: 0.32,
     discountThreshold: 8,
     discountAmount: 2,
     discount: 0.32,
@@ -441,16 +456,16 @@ const offers = {
 };
 
 cart3.forEach((item) => {
-  offers[item].count++;
-  sum3 += priceList[item];
+  products[item].count++;
+  sum3 += products[item].price;
 });
 
-for (const [key, value] of Object.entries(offers)) {
+for (const [key, value] of Object.entries(products)) {
   const dividend = value.count; // Δ
   const remainder = value.count % value.discountThreshold; // υ
   const quotient = value.discountThreshold; // π
   const divider = (dividend - remainder) / quotient; // δ
-  const discount = divider * value.discountAmount * priceList[key];
+  const discount = divider * value.discountAmount * value.discount;
   sum3 -= discount;
 }
 
@@ -464,5 +479,5 @@ for (const [key, value] of Object.entries(offers)) {
   the discountThreshold for apples is 5 and the discountAmount is 2.
  */
 
-const sum = Number(sum3.toFixed(1));
-console.log(sum);
+const sumFinal = Number(sum3.toFixed(2));
+console.log(sumFinal);
